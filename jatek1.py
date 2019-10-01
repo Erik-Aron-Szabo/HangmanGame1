@@ -1,44 +1,57 @@
 import random
-from typing import List
 
 
-WORD_LIST = open("/home/erik/Suli/het2/hangman/countries.txt").readlines()
 AVAILABLE_CHARACTERS = "qwertyuiopasdfghjklzx&cvbnm-"
-
-
-
 
 #------------------------------------------
 
 #--------------------------------------------
 
-
-#will change unknown_word
-# ---> "---------"
-
-
+#----------------------------------
+ 
 #----------------------------------
 
-'''while True:
+def game_difficulty():
+    print("Hi! This is HANGMAN!")
+    print("These are the difficulties you can choose from:")
+    print("**********************************")
+    print("*********Easy (1)*****************")
+    print("*********Medium (2)***************")
+    print("*********Hard (3)*****************")
+    print("*********Extreme (4)**************")
+    print("**********************************")
+    levels = input("Please choose game difficulty!\n(Type a numnber!)\n")
     
-    
-    
-    user_choice = input("Do you want to start a new game? (Y/N)\n")
-    try:
-        if user_choice == "Y" or user_choice == "y":
-            print("Starting a new game...")
-            refresh_game()
-            hangman()
-        elif user_choice == "N" or user_choice == "n":
-            break
-            exit()
-            
-    except:
-        print("Please type 'y' (yes) or 'n' (no)!") '''   
-#----------------------------------
+    if levels == "1":
+        print("You are about to start a HANGMAN game!")
+        print("Difficulty: 'Easy'")
+        print("You need to guess the COUNTRIES of the world!")
+        return "1.txt"
+        # above, = A1
+
+    elif levels == "2":
+        print("You are about to start a HANGMAN game!")
+        print("Difficulty: 'Medium'")
+        print("You need to guess the ANIMALS of the world!")
+        return "2.txt"
 
 
 
+    elif levels == "3":
+        print("You are about to start a HANGMAN game!")
+        print("Difficulty: 'Hard'")
+        print("You need to guess NAMES!")
+        return "3.txt"
+
+
+
+
+
+    elif levels == "4":
+        print("You are about to start a HANGMAN game!")
+        print("Difficulty: 'Extreme'")
+        print("...Good Luck!...")
+        return "4.txt"
 
 
 
@@ -48,7 +61,11 @@ AVAILABLE_CHARACTERS = "qwertyuiopasdfghjklzx&cvbnm-"
 #---------------------------------------
 
 def hangman_body():
-    unknown_word = random.choice(WORD_LIST).lower().strip()
+    #alatt, egy "a.txt" ---> returns a file REF-A1
+    wordlist_filename = game_difficulty()
+    with open(wordlist_filename) as f:
+        wordlist = f.readlines()
+    unknown_word = random.choice(wordlist).lower().strip()
     guess_word = []
     length_word = len(unknown_word)
     health = 6
@@ -65,7 +82,7 @@ def hangman_body():
         print(f"Already used characters: {already_used}")
         print("**************************************")
         print(guess_word)
-        guess = input("Guess a letter (or a '-'):\n")
+        guess = input("Guess a letter or ('-' '&' 'space'):\n")
         guess = guess.lower()
         if not guess in AVAILABLE_CHARACTERS:
             print("Please type any single letter of the alphabet (or '&' or '-')!")
@@ -87,8 +104,6 @@ def hangman_body():
                     print("******************************")
                     print("**********YOU WON!************")
                     print("******************************")
-
-                    # start a new game?
                     print("\nGAME OVER!")
                     break
             else:
@@ -148,6 +163,8 @@ def hangman_body():
                         print("You lose!")
                         print()
                         print(f"The word was -----> {unknown_word}")
+
+
 def restart_game():
     while True:
         user_choice = input("Do you want to start a new game? (Y/N)\n")
@@ -156,7 +173,7 @@ def restart_game():
                 print("Starting a new game...")
                 hangman_body()
             elif user_choice == "N" or user_choice == "n":
-                break
+                break   
                 exit()
                 
         except:
@@ -168,4 +185,3 @@ def restart_game():
 if __name__ == "__main__":
     hangman_body()
     restart_game()
-
