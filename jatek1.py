@@ -21,12 +21,28 @@ def get_level_from_user():
     print("*********Hard (3)*****************")
     print("*********Extreme (4)**************")
     print("**********************************")
-    levels = input("Please choose game difficulty!\n(Type a numnber!)\n")
+    levels = input("Please choose game difficulty(Type a numnber!)")
+    while not levels in ['1', '2', '3', '4']: 
+        print("**************************")
+        print("Please type 1, 2, 3 or 4!")
+        print("**************************")
+        levels = input("Please choose game difficulty!\n(Type a numnber!)\n")
+
+        if levels == "1":
+            break
+        elif levels == "2":
+            break
+        elif levels == "3":
+            break
+        elif levels == "4":
+            break
+        
     return levels  
 
 
 def game_difficulty(levels):
     print("You are about to start a HANGMAN game!")
+    print("\n\n")
     if levels == "1":
         print("Difficulty: 'Easy'")
         print("You need to guess the COUNTRIES of the world!")
@@ -71,7 +87,18 @@ def hangman_body():
     already_used = []
     guessing_count = 0
     score = 0
-    user_name = input("Give me your username please:\n")
+    while True:
+        print("\n\n")
+        print("Username should be between 4-10 characters!")
+        print()
+        user_name = input("Give me your username please:\n")
+       
+        if len(user_name) <= 3 or len(user_name) > 10:
+            print()
+            print("Please write a username between 4 to 10 characters!")
+            user_name = input("Give me your username please:\n")
+        else:
+            break
     high_score = []
     #user_input = input("Please give me your username:\n")
     for character in unknown_word:
@@ -109,7 +136,7 @@ def hangman_body():
                     print("******************************")
                     print("**********YOU WON!************")
                     print("******************************")
-                    score += len(guess_word)+health-(guessing_count//2)*levels
+                    score += len(guess_word)+health-(guessing_count//2)*int(levels)
                     # start a new game?
                     print("\nGAME OVER!")
                     time_finished = time.time()-start_time
